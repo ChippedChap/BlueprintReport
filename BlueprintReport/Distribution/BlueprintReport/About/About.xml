@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ModMetaData>
+	<name>Blueprint Report</name>
+	<author>ChippedChap</author>
+	<targetVersion>0.18.0</targetVersion>
+	<description>Version 1.0
+
+A mod that adds an inspect tab that displays the material requirements of all selected blueprints. For all those times when you really need to know if you can build something or not.
+
+You can select/designate both blueprints and frames, with the totals continuously updating as colonists add more materials. New frames converted from selected blueprints will automatically be selected for your convenience.
+
+Accessing the blueprints tab:
+
+Blueprint selection - For an amount of blueprints that are below the selection limit. The inspect tab will have a new tab called "Blueprints" that you can open. This tab will add up all the material requirements of selected blueprints and display them.
+
+Blueprint designation - For blueprints that are over the vanilla selection limit. Use the designator "Tabulate Costs" in Architect > Orders and designate your blueprints. The blueprints tab will become available for you to open and it will display totals as if you selected what you designated. Use the "Tabulate Costs" and "Untabulate Costs" accordingly to change which blueprints to consider.
+
+Note that your designations will be removed once you exit out of the window by pressing escape.
+
+Reading the blueprints tab:
+
+The tab will display how much of each material you need in a list with the icon and name of the material. The displayed number will depend on the display mode you have selected.
+
+Modes:
+
+Required: The number displayed will be how much of one material you need to fully build the selected blueprints.
+
+Required - Stored: The number displayed, if positive, is how much more material you need and if negative, how much material will be left over.
+
+Ascending/Descending: Pretty self explanatory. The list sorts each material by the amount required or the difference. Ascending lists from least to greatest and descending lists from greatest to least.
+	</description>
+</ModMetaData>

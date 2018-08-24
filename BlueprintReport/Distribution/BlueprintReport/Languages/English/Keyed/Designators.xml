@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <DesignatorTabulate>Tabulate Costs</DesignatorTabulate>
+  <DesignatorTabulateDesc>Designate blueprints or frames.\n\nUse this to get a requirements report for an amount of blueprints greater than the vanilla selection limit.</DesignatorTabulateDesc>
+  <DesignatorUntabulate>Untabulate Costs</DesignatorUntabulate>
+  <DesignatorUntabulateDesc>Remove the designation on blueprints or frames that mark them for requirements tabulation.</DesignatorUntabulateDesc>
+</LanguageData>

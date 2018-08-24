@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<MessageMustDesignateConstructibles>Must designate blueprints or frames for selection.</MessageMustDesignateConstructibles>
+	<MessageMustDesignateTabulatedConstructibles>Must designate blueprints or frames already tabulated.</MessageMustDesignateTabulatedConstructibles>
+</LanguageData>

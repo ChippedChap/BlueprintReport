@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <!-- Blueprints tab -->
+  <BlueprintsTabLabel>Blueprints</BlueprintsTabLabel>
+  <!-- Requirements list tooltips -->
+  <ReqRowTipLine1>The selected blueprints/frames require {0} {1}</ReqRowTipLine1>
+  <ReqRowTipLine2Excess>\n\n{0} {1} will remain after blueprints/frames are built.</ReqRowTipLine2Excess>
+  <ReqRowTipLine2Lack>\n\n{0} more {1} is required to fully build selected blueprints/frames.</ReqRowTipLine2Lack>
+  <!-- Mode button -->
+  <TotalsSortModes_Absolute>Mode: Required</TotalsSortModes_Absolute>
+  <TotalsSortModes_AbsoluteTip>Displays required materials to build selected blueprints. For partially finished frames, the amount missing is displayed.\n\nUse this for general planning.</TotalsSortModes_AbsoluteTip>
+  <TotalsSortModes_Difference>Mode: Required - Stored</TotalsSortModes_Difference>
+  <TotalsSortModes_DifferenceTip>Displays required materials minus materials stored materials. Positive numbers indicate how much more you need, negative numbers indicate how much will be left over.\n\nUse this to decide how much material to craft/mine/trade/steal, or plan for future projects.</TotalsSortModes_DifferenceTip>
+  <!-- Sort button-->
+  <SortButtonAscending>Sort: Ascending</SortButtonAscending>
+  <SortButtonAscendingTip>Sort materials required by ascending.</SortButtonAscendingTip>
+  <SortButtonDescending>Sort: Descending</SortButtonDescending>
+  <SortButtonDescendingTip>Sort materials required by descending.</SortButtonDescendingTip>
+</LanguageData>
