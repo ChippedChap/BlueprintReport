@@ -43,7 +43,7 @@ namespace BlueprintReport
 			// Deal with special cases
 			if (Text.CalcSize(stringToTrim).x <= sizeToTrimTo)
 				return stringToTrim;
-			else if (Text.CalcSize(stringToTrim.Substring(1)).x > sizeToTrimTo)
+			else if (Text.CalcSize(stringToTrim.Substring(0, 1)).x > sizeToTrimTo)
 				return "";
 			// Do the algorithm
 			int lower = 0;
