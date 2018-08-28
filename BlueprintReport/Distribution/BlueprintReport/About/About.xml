@@ -3,7 +3,7 @@
 <ModMetaData>
 	<name>Blueprint Report</name>
 	<author>ChippedChap</author>
-	<targetVersion>0.18.0</targetVersion>
+	<targetVersion>0.19.0</targetVersion>
 	<description>Version 1.0
 
 A mod that adds an inspect tab that displays the material requirements of all selected blueprints. For all those times when you really need to know if you can build something or not.

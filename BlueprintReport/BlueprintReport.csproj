@@ -133,9 +133,9 @@ copy /Y "$(ProjectDir)LocalDev\Refs\"0Harmony.dll "$(ProjectDir)Distribution\%25
 )
 
 @echo deleting previous build ...
-if exist "%25DIST_DIR%25\%25ModName%25*.zip" del "%25DIST_DIR%25\%25ModName%25*.zip"
+if exist "$(ProjectDir)LocalDev\%25ModName%25.zip" del "$(ProjectDir)LocalDev\%25ModName%25.zip"
 @echo packaging new build...
-call "%25ZA_DIR%25\7za.exe" a -tzip -r  "%25DIST_DIR%25\%25ModName%25.@(VersionNumber)_%25DATE:~4,2%25%25DATE:~7,2%25%25DATE:~10,4%25.zip" "$(ProjectDir)Distribution\*.*"
+call "%25ZA_DIR%25\7za.exe" a -tzip -r  "$(ProjectDir)LocalDev\%25ModName%25.zip" "$(ProjectDir)Distribution\*.*"
 
 if exist "%25RIM_DIR%25\Mods\%25ModName%25" (
 @echo Deleting old mod files
