@@ -107,6 +107,8 @@ namespace BlueprintReport
 		// Get difference between count and the number present on map
 		public static int GetCountOnMapDifference(this Map map, ThingDefCount count)
 		{
+			if (count.ThingDef.IsBlueprint)
+				return 0;
 			return count.Count - map.GetCountAll(count.ThingDef);
 		}
 

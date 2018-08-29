@@ -121,9 +121,17 @@ namespace BlueprintReport
 		private void UpdateLargestNumberWidth(List<ThingDefCount> tcList)
 		{
 			if (tcList.Count == 0) return;
-			int firstPotentialIndex = 0;
-			int secondPotentialIndex = tcList.Count - 1;
-			largestNumberWidth = Mathf.Max(Text.CalcSize(tcList[firstPotentialIndex].Count.ToStringWithSign()).x, Text.CalcSize(tcList[secondPotentialIndex].Count.ToStringWithSign()).x);
+			switch (currentSortMode)
+			{
+				case TotalsSortModes.Absolute:
+					largestNumberWidth = Mathf.Max(Text.CalcSize(tcList[0].Count.ToStringWithSign()).x, Text.CalcSize(tcList[tcList.Count - 1].Count.ToStringWithSign()).x);
+					break;
+				case TotalsSortModes.Difference:
+					float firstDifferenceSize = Text.CalcSize(Find.CurrentMap.GetCountOnMapDifference(tcList[0]).ToStringWithSign()).x;
+					float secondDifferenceSize = Text.CalcSize(Find.CurrentMap.GetCountOnMapDifference(tcList[tcList.Count - 1]).ToStringWithSign()).x;
+					largestNumberWidth = Mathf.Max(firstDifferenceSize, secondDifferenceSize);
+					break;
+			}
 		}
 
 		private void DrawRequirementRow(ThingDefCount thingCount, Rect listHolder, int listPos, bool canDrawToolTips)
