@@ -13,7 +13,7 @@ namespace BlueprintReport
 			defaultDesc = "DesignatorUntabulateDesc".Translate();
 			icon = ContentFinder<Texture2D>.Get("untabulate", true);
 			icon.mipMapBias = -1f;
-			soundSucceeded = SoundDefOf.DesignatePlanRemove;
+			soundSucceeded = SoundDefOf.Designate_PlanRemove;
 		}
 
 		public override AcceptanceReport CanDesignateThing(Thing t)

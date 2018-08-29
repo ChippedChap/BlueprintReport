@@ -14,7 +14,7 @@ namespace BlueprintReport
 			defaultLabel = "DesignatorTabulate".Translate();
 			defaultDesc = "DesignatorTabulateDesc".Translate();
 			icon = ContentFinder<Texture2D>.Get("tabulate", true);
-			soundSucceeded = SoundDefOf.DesignatePlanAdd;
+			soundSucceeded = SoundDefOf.Designate_PlanAdd;
 			useMouseIcon = true;
 		}
 
