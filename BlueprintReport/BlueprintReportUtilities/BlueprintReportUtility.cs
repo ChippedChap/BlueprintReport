@@ -21,18 +21,18 @@ namespace BlueprintReport
 		}
 
 		// Takes two ThingCounts and returns a new one with the counts added
-		public static ThingCount AddThingCounts(ThingCount tc1, ThingCount tc2)
+		public static ThingDefCount AddThingCounts(ThingDefCount tc1, ThingDefCount tc2)
 		{
 			if (tc1.ThingDef != tc2.ThingDef) Log.Warning("Added two ThingCounts of different ThingDefs. New ThingCount will have ThingDef of first ThingCount.");
-			return new ThingCount(tc1.ThingDef, tc1.Count + tc2.Count);
+			return new ThingDefCount(tc1.ThingDef, tc1.Count + tc2.Count);
 		}
 
 		// Get materials considering that IConstructible may be a Blueprint_Install
-		public static List<ThingCountClass> GetMaterialsNeededSafely(this IConstructible constructible)
+		public static List<ThingDefCountClass> GetMaterialsNeededSafely(this IConstructible constructible)
 		{
 			if (constructible is Blueprint_Install bInstall)
 			{
-				return new List<ThingCountClass>() { new ThingCount(bInstall.GetInnerIfMinified().def, 1) };
+				return new List<ThingDefCountClass>() { new ThingDefCountClass(bInstall.GetInnerIfMinified().def, 1) };
 			}
 			return constructible.MaterialsNeeded();
 		}
@@ -88,6 +88,26 @@ namespace BlueprintReport
 				if (list[i] is IConstructible thingAsConstructible)
 					return thingAsConstructible as Thing;
 			return null;
+		}
+		
+		// Get the number of a certain ThingDef that exists on the map.
+		public static int GetCountAll(this Map map, ThingDef def)
+		{
+			List<Thing> thingList = map.listerThings.ThingsOfDef(def);
+			int count = 0;
+			for (int i = 0; i < thingList.Count; i++)
+			{
+				Thing innerIfMinified = thingList[i].GetInnerIfMinified();
+				if (innerIfMinified.def.CountAsResource && !thingList[i].IsNotFresh() && !thingList[i].IsForbidden(Faction.OfPlayer))
+					count += innerIfMinified.stackCount;
+			}
+			return count;
+		}
+
+		// Get difference between count and the number present on map
+		public static int GetCountOnMapDifference(this Map map, ThingDefCount count)
+		{
+			return count.Count - map.GetCountAll(count.ThingDef);
 		}
 
 		// Get designator instance of type

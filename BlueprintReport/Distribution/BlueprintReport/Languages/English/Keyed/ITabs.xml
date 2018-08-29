@@ -9,8 +9,8 @@
   <!-- Mode button -->
   <TotalsSortModes_Absolute>Mode: Required</TotalsSortModes_Absolute>
   <TotalsSortModes_AbsoluteTip>Displays required materials to build selected blueprints. For partially finished frames, the amount missing is displayed.\n\nUse this for general planning.</TotalsSortModes_AbsoluteTip>
-  <TotalsSortModes_Difference>Mode: Required - Stored</TotalsSortModes_Difference>
-  <TotalsSortModes_DifferenceTip>Displays required materials minus materials stored materials. Positive numbers indicate how much more you need, negative numbers indicate how much will be left over.\n\nUse this to decide how much material to craft/mine/trade/steal, or plan for future projects.</TotalsSortModes_DifferenceTip>
+  <TotalsSortModes_Difference>Mode: Required - Available</TotalsSortModes_Difference>
+  <TotalsSortModes_DifferenceTip>Displays required materials minus unforbidden materials on the map. Positive numbers indicate how much more you need, negative numbers indicate how much will be left over.\n\nUse this to decide how much material to craft/mine/trade/steal, or plan for future projects.</TotalsSortModes_DifferenceTip>
   <!-- Sort button-->
   <SortButtonAscending>Sort: Ascending</SortButtonAscending>
   <SortButtonAscendingTip>Sort materials required by ascending.</SortButtonAscendingTip>

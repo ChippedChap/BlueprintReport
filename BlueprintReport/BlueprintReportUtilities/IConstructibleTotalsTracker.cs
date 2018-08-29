@@ -16,7 +16,7 @@ namespace BlueprintReport
 	class IConstructibleTotalsTracker
 	{
 		private HashSet<IConstructible> trackedConstructibles = new HashSet<IConstructible>();
-		private List<ThingCount> cachedRequirementsTotals;
+		private List<ThingDefCount> cachedRequirementsTotals;
 		private bool cachedTotalsAreUpdated = false;
 		private TotalsSortModes cachedTotalsSortMode = TotalsSortModes.Unsorted;
 		public bool sortDescending = true;
@@ -41,14 +41,14 @@ namespace BlueprintReport
 
 		public bool BlueprintBuildIsTracked(Blueprint_Build blueprint) => trackedConstructibles.Contains(blueprint);
 
-		public List<ThingCount> GetRequirementsTotals(TotalsSortModes modeToSortCountsBy = TotalsSortModes.Absolute, bool ascending = false)
+		public List<ThingDefCount> GetRequirementsTotals(TotalsSortModes modeToSortCountsBy = TotalsSortModes.Absolute, bool ascending = false)
 		{
 			if (!cachedTotalsAreUpdated)
 			{
-				List<ThingCount> protoRequirementsTotals = new List<ThingCount>();
+				List<ThingDefCount> protoRequirementsTotals = new List<ThingDefCount>();
 				foreach(IConstructible tracked in trackedConstructibles)
 				{
-					foreach(ThingCount requirements in tracked.GetMaterialsNeededSafely())
+					foreach(ThingDefCount requirements in tracked.GetMaterialsNeededSafely())
 					{
 						int thingCountWithSameThingDefIndex = protoRequirementsTotals.FindIndex(x => x.ThingDef == requirements.ThingDef);
 						if (thingCountWithSameThingDefIndex == -1)
@@ -57,7 +57,7 @@ namespace BlueprintReport
 						}
 						else
 						{
-							ThingCount tcWithSameThingDef = protoRequirementsTotals[thingCountWithSameThingDefIndex];
+							ThingDefCount tcWithSameThingDef = protoRequirementsTotals[thingCountWithSameThingDefIndex];
 							protoRequirementsTotals[thingCountWithSameThingDefIndex] = BlueprintReportUtility.AddThingCounts(tcWithSameThingDef, requirements);
 						}
 					}
@@ -93,9 +93,8 @@ namespace BlueprintReport
 					cachedRequirementsTotals.Sort((x, y) => x.Count.CompareTo(y.Count));
 					break;
 				case TotalsSortModes.Difference:
-					ResourceCounter resources = Find.VisibleMap.resourceCounter;
-					cachedRequirementsTotals.Sort((x, y) => (x.Count - resources.GetCount(x.ThingDef)).CompareTo(
-						y.Count - resources.GetCount(y.ThingDef)));
+					cachedRequirementsTotals.Sort((x, y) => (Find.CurrentMap.GetCountOnMapDifference(x)).CompareTo(
+						Find.CurrentMap.GetCountOnMapDifference(y)));
 					break;
 			}
 			if (descending) cachedRequirementsTotals.Reverse();
@@ -125,7 +124,7 @@ namespace BlueprintReport
 		private void UpdateTrackedFromDesigThings()
 		{
 			// Add new designated constructibles.
-			foreach(Designation designation in Find.VisibleMap.designationManager.SpawnedDesignationsOfDef(BlueprintReportUtility.tabulateDesignationDef))
+			foreach(Designation designation in Find.CurrentMap.designationManager.SpawnedDesignationsOfDef(BlueprintReportUtility.tabulateDesignationDef))
 			{
 				LocalTargetInfo desTgt = designation.target;
 				if (desTgt.HasThing && desTgt.Thing is IConstructible && !trackedConstructibles.Contains(desTgt.Thing as IConstructible))
@@ -133,7 +132,7 @@ namespace BlueprintReport
 			}
 			// Remove undesignated constructibles.
 			foreach (IConstructible constructible in new HashSet<IConstructible>(trackedConstructibles))
-				if (Find.VisibleMap.designationManager.DesignationOn((Thing)constructible, BlueprintReportUtility.tabulateDesignationDef) == null)
+				if (Find.CurrentMap.designationManager.DesignationOn((Thing)constructible, BlueprintReportUtility.tabulateDesignationDef) == null)
 					trackedConstructibles.Remove(constructible);
 		}
 	}

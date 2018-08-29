@@ -102,7 +102,7 @@ namespace BlueprintReport
 
 		public override void PreClose()
 		{
-			Find.VisibleMap.designationManager.allDesignations.RemoveAll(d => d.def == BlueprintReportUtility.tabulateDesignationDef);
+			Find.CurrentMap.designationManager.allDesignations.RemoveAll(d => d.def == BlueprintReportUtility.tabulateDesignationDef);
 		}
 
 		public override void ExtraOnGUI()

@@ -13,7 +13,7 @@ namespace BlueprintReport.SelectorChangeNotifiers
 		{
 			if (Find.Selector.NumSelected > 1 && Find.Selector.SelectedObjects.Contains(__instance))
 				SelectResult(__result);
-			else if (Find.VisibleMap.designationManager.SpawnedDesignationsOfDef(BlueprintReportUtility.tabulateDesignationDef).Any())
+			else if (Find.CurrentMap.designationManager.SpawnedDesignationsOfDef(BlueprintReportUtility.tabulateDesignationDef).Any())
 				DesignateResult(__result);
 		}
 
@@ -26,7 +26,7 @@ namespace BlueprintReport.SelectorChangeNotifiers
 		static void DesignateResult(Thing result)
 		{
 			if (result != null)
-				Find.VisibleMap.designationManager.AddDesignation(new Designation(result, BlueprintReportUtility.tabulateDesignationDef));
+				Find.CurrentMap.designationManager.AddDesignation(new Designation(result, BlueprintReportUtility.tabulateDesignationDef));
 		}
 	}
 }

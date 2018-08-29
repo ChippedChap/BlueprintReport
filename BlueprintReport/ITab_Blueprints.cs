@@ -15,6 +15,7 @@ namespace BlueprintReport
 		private readonly float listElementsMargin = 3f;
 		private readonly float buttonWidth = 210f;
 		private readonly float buttonNum = 2;
+		private readonly Texture2D redAltTexture = SolidColorMaterials.NewSolidColorTexture(new Color(1f, 0.1f, 0.1f, 0.05f));
 
 		private readonly Vector2 WinSize = new Vector2(250f, 400f);
 		private Vector2 scrollPosition = new Vector2(0f, 0f);
@@ -73,7 +74,7 @@ namespace BlueprintReport
 			// Prevent tooltips of list element from showing when mouse is not in list holder.
 			bool rowCanDrawTips = Mouse.IsOver(listHolderRect);
 			// Draw resource list
-			List<ThingCount> thingCountList = constructibleTracker.GetRequirementsTotals(currentSortMode, sortDescending);
+			List<ThingDefCount> thingCountList = constructibleTracker.GetRequirementsTotals(currentSortMode, sortDescending);
 			UpdateLargestNumberWidth(thingCountList);
 			Widgets.BeginScrollView(listHolderRect, ref scrollPosition, listRect, true);
 			for (int i=0; i<constructibleTracker.NumOfUniqueThingDefsInTotals; i++)
@@ -117,7 +118,7 @@ namespace BlueprintReport
 			return (possibleHeight > listHolder.height) ? possibleHeight : listHolder.height + 0.1f;
 		}
 
-		private void UpdateLargestNumberWidth(List<ThingCount> tcList)
+		private void UpdateLargestNumberWidth(List<ThingDefCount> tcList)
 		{
 			if (tcList.Count == 0) return;
 			int firstPotentialIndex = 0;
@@ -125,12 +126,16 @@ namespace BlueprintReport
 			largestNumberWidth = Mathf.Max(Text.CalcSize(tcList[firstPotentialIndex].Count.ToStringWithSign()).x, Text.CalcSize(tcList[secondPotentialIndex].Count.ToStringWithSign()).x);
 		}
 
-		private void DrawRequirementRow(ThingCount thingCount, Rect listHolder, int listPos, bool canDrawToolTips)
+		private void DrawRequirementRow(ThingDefCount thingCount, Rect listHolder, int listPos, bool canDrawToolTips)
 		{
 			float yPosition = listPos * listElementRectHeight;
 			Rect highlightRect = new Rect(0f, yPosition, listHolder.width, listElementRectHeight);
+			bool rowShouldBeRed = Find.CurrentMap.GetCountOnMapDifference(thingCount) > 0;
 			// Do tool tips and background.
-			if (listPos % 2 == 0) Widgets.DrawAltRect(highlightRect);
+			if (listPos % 2 == 0 && rowShouldBeRed)
+				GUI.DrawTexture(highlightRect, redAltTexture);
+			else if (listPos % 2 == 0)
+				Widgets.DrawAltRect(highlightRect);
 			if (canDrawToolTips) TooltipHandler.TipRegion(highlightRect, new TipSignal(GetReqRowTooltip(thingCount)));
 			// Draw thingdef icon
 			Rect mainElementsRect = highlightRect.WidthContractedBy(listElementsMargin);
@@ -138,18 +143,20 @@ namespace BlueprintReport
 			Widgets.ThingIcon(iconRect, thingCount.ThingDef);
 			// Do text labels
 			Rect labelsRect = new Rect(listElementRectHeight, yPosition, listHolder.width - listElementRectHeight, listElementRectHeight).WidthContractedBy(2 * listElementsMargin);
+			if (rowShouldBeRed) GUI.color = Color.red;
 			DoTextLabel(labelsRect, thingCount.ThingDef.LabelCap);
 			DoNumberLabel(labelsRect, thingCount);
+			GUI.color = Color.white;
 		}
 
-		private float GetFillFraction(ThingCount tc)
+		private float GetFillFraction(ThingDefCount tc)
 		{
 			float needed = tc.Count;
-			float available = Find.VisibleMap.resourceCounter.GetCount(tc.ThingDef);
+			float available = Find.CurrentMap.resourceCounter.GetCount(tc.ThingDef);
 			return Mathf.Clamp(available / needed, 0, 1);
 		}
 
-		private string GetReqRowTooltip(ThingCount rowTC)
+		private string GetReqRowTooltip(ThingDefCount rowTC)
 		{
 			// First line
 			string tipString = "ReqRowTipLine1".Translate(new object[] {
@@ -157,7 +164,7 @@ namespace BlueprintReport
 				rowTC.ThingDef.label
 			});
 			// Second line
-			int difference = rowTC.Count - Find.VisibleMap.resourceCounter.GetCount(rowTC.ThingDef);
+			int difference = Find.CurrentMap.GetCountOnMapDifference(rowTC);
 			if (difference < 0)
 			{
 				tipString += "ReqRowTipLine2Excess".Translate(new object[] {
@@ -182,7 +189,7 @@ namespace BlueprintReport
 			Widgets.Label(rowRect, labelText);
 		}
 
-		private void DoNumberLabel(Rect rowRect, ThingCount tc)
+		private void DoNumberLabel(Rect rowRect, ThingDefCount tc)
 		{
 			Rect textRect = new Rect(rowRect.x + rowRect.width - largestNumberWidth, rowRect.y, largestNumberWidth, rowRect.height);
 			switch (currentSortMode)
@@ -191,8 +198,7 @@ namespace BlueprintReport
 					Widgets.Label(textRect, tc.Count.ToString());
 					break;
 				case TotalsSortModes.Difference:
-					int difference = tc.Count - Find.VisibleMap.resourceCounter.GetCount(tc.ThingDef);
-					string strToDisplay = difference.ToStringWithSign();
+					string strToDisplay = Find.CurrentMap.GetCountOnMapDifference(tc).ToStringWithSign();
 					Widgets.Label(textRect, strToDisplay);
 					break;
 			}
