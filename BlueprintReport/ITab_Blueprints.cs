@@ -130,7 +130,7 @@ namespace BlueprintReport
 		{
 			float yPosition = listPos * listElementRectHeight;
 			Rect highlightRect = new Rect(0f, yPosition, listHolder.width, listElementRectHeight);
-			bool rowShouldBeRed = BlueprintReportUtility.GetCountOnMapDifference(thingCount, Find.CurrentMap) > 0;
+			bool rowShouldBeRed = Find.CurrentMap.GetCountOnMapDifference(thingCount) > 0;
 			// Do tool tips and background.
 			if (listPos % 2 == 0 && rowShouldBeRed)
 				GUI.DrawTexture(highlightRect, redAltTexture);
@@ -164,7 +164,7 @@ namespace BlueprintReport
 				rowTC.ThingDef.label
 			});
 			// Second line
-			int difference = BlueprintReportUtility.GetCountOnMapDifference(rowTC, Find.CurrentMap);
+			int difference = Find.CurrentMap.GetCountOnMapDifference(rowTC);
 			if (difference < 0)
 			{
 				tipString += "ReqRowTipLine2Excess".Translate(new object[] {
@@ -198,7 +198,7 @@ namespace BlueprintReport
 					Widgets.Label(textRect, tc.Count.ToString());
 					break;
 				case TotalsSortModes.Difference:
-					string strToDisplay = BlueprintReportUtility.GetCountOnMapDifference(tc, Find.CurrentMap).ToStringWithSign();
+					string strToDisplay = Find.CurrentMap.GetCountOnMapDifference(tc).ToStringWithSign();
 					Widgets.Label(textRect, strToDisplay);
 					break;
 			}

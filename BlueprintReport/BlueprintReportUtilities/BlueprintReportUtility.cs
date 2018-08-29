@@ -90,9 +90,24 @@ namespace BlueprintReport
 			return null;
 		}
 		
-		public static int GetCountOnMapDifference(ThingDefCount count, Map map)
+		// Get the number of a certain ThingDef that exists on the map.
+		public static int GetCountAll(this Map map, ThingDef def)
 		{
-			return count.Count - map.resourceCounter.GetCount(count.ThingDef);
+			List<Thing> thingList = map.listerThings.ThingsOfDef(def);
+			int count = 0;
+			for (int i = 0; i < thingList.Count; i++)
+			{
+				Thing innerIfMinified = thingList[i].GetInnerIfMinified();
+				if (innerIfMinified.def.CountAsResource && !thingList[i].IsNotFresh() && !thingList[i].IsForbidden(Faction.OfPlayer))
+					count += innerIfMinified.stackCount;
+			}
+			return count;
+		}
+
+		// Get difference between count and the number present on map
+		public static int GetCountOnMapDifference(this Map map, ThingDefCount count)
+		{
+			return count.Count - map.GetCountAll(count.ThingDef);
 		}
 
 		// Get designator instance of type

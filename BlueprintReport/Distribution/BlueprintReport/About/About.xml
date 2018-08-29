@@ -26,7 +26,7 @@ Modes:
 
 Required: The number displayed will be how much of one material you need to fully build the selected blueprints.
 
-Required - Stored: The number displayed, if positive, is how much more material you need and if negative, how much material will be left over.
+Required - Available: The number displayed, if positive, is how much more material you need and if negative, how much material will be left over.
 
 Ascending/Descending: Pretty self explanatory. The list sorts each material by the amount required or the difference. Ascending lists from least to greatest and descending lists from greatest to least.
 	</description>

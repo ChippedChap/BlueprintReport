@@ -93,9 +93,8 @@ namespace BlueprintReport
 					cachedRequirementsTotals.Sort((x, y) => x.Count.CompareTo(y.Count));
 					break;
 				case TotalsSortModes.Difference:
-					ResourceCounter resources = Find.CurrentMap.resourceCounter;
-					cachedRequirementsTotals.Sort((x, y) => (x.Count - resources.GetCount(x.ThingDef)).CompareTo(
-						y.Count - resources.GetCount(y.ThingDef)));
+					cachedRequirementsTotals.Sort((x, y) => (Find.CurrentMap.GetCountOnMapDifference(x)).CompareTo(
+						Find.CurrentMap.GetCountOnMapDifference(y)));
 					break;
 			}
 			if (descending) cachedRequirementsTotals.Reverse();
