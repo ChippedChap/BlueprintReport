@@ -3,7 +3,7 @@ using Harmony;
 using Verse;
 using RimWorld;
 
-namespace BlueprintReport.SelectorChangeNotifiers
+namespace BlueprintReport.BlueprintReportUtilities
 {
 	[HarmonyPatch(typeof(Blueprint_Build))]
 	[HarmonyPatch("MakeSolidThing")]

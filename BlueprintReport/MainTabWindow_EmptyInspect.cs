@@ -1,9 +1,11 @@
-﻿using System;
+﻿using BlueprintReport.BlueprintReportUtilities;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
+
 namespace BlueprintReport
 {
 	class MainTabWindow_EmptyInspect : MainTabWindow, IInspectPane

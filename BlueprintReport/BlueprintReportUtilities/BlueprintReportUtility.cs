@@ -4,15 +4,15 @@ using RimWorld;
 using Verse;
 using UnityEngine;
 
-namespace BlueprintReport
+namespace BlueprintReport.BlueprintReportUtilities
 {
 	static class BlueprintReportUtility
 	{
 		public static readonly float ellipsesSize = Text.CalcSize("...").x;
 
-		public static MainButtonDef emptyInspectorDef = DefDatabase<MainButtonDef>.GetNamed("EmptyInspect");
+		public static readonly MainButtonDef emptyInspectorDef = DefDatabase<MainButtonDef>.GetNamed("EmptyInspect");
 
-		public static DesignationDef tabulateDesignationDef = DefDatabase<DesignationDef>.GetNamed("TabulateConstructible");
+		public static readonly DesignationDef tabulateDesignationDef = DefDatabase<DesignationDef>.GetNamed("TabulateConstructible");
 
 		// Like ContractedBy() but for width only
 		public static Rect WidthContractedBy(this Rect original, float xMargin)
@@ -63,14 +63,6 @@ namespace BlueprintReport
 			}
 			return stringToTrim.Substring(0, lower);
 		}
-
-		// Convert int to string but add positive sign if integer is positive and not zero.
-		public static string ToStringWithSign(this int integer)
-		{
-			if (integer > 0)
-				return "+" + integer.ToString();
-			return integer.ToString();
-		}
 		
 		// Select something by adding directly to the selector's selected object list and then notfying the drawer.
 		public static void SelectRaw(this Selector selector, object objectToSelect, bool notifyChange = true)
@@ -112,6 +104,18 @@ namespace BlueprintReport
 			return count.Count - map.GetCountAll(count.ThingDef);
 		}
 
+		// Same as above, but can pass amount present on map through out paramater.
+		public static int GetCountOnMapDifference(this Map map, ThingDefCount count, out int numOnMap)
+		{
+			if (count.ThingDef.IsBlueprint)
+			{
+				numOnMap = count.Count;
+				return 0;
+			}
+			numOnMap = map.GetCountAll(count.ThingDef);
+			return count.Count - numOnMap;
+		}
+
 		// Get designator instance of type
 		public static Designator GetDesigInstanceOfType(Type type)
 		{
@@ -125,6 +129,7 @@ namespace BlueprintReport
 
 		private static Designator MakeDesignatorInstance(Type type)
 		{
+			Log.Message("Making new designator instance");
 			try
 			{
 				return (Designator)Activator.CreateInstance(type);

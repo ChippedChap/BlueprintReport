@@ -1,7 +1,6 @@
-﻿using System;
+﻿using BlueprintReport.BlueprintReportUtilities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using RimWorld;
 using Verse;
 using UnityEngine;
@@ -108,6 +107,8 @@ namespace BlueprintReport
 		{
 			Rect buttonRect = new Rect(baseRect.x, baseRect.y + listDistanceFromTop/buttonNum - 2.5f, buttonWidth, listDistanceFromTop/buttonNum - 2.5f);
 			string buttonLabel = (sortDescending) ? "SortButtonDescending".Translate() : "SortButtonAscending".Translate();
+			string buttonTip = (sortDescending) ? "SortButtonDescendingTip".Translate() : "SortButtonAscendingTip".Translate();
+			TooltipHandler.TipRegion(buttonRect, new TipSignal(buttonTip));
 			if (Widgets.ButtonText(buttonRect, buttonLabel, true, true, true))
 				sortDescending = !sortDescending;
 		}
@@ -172,19 +173,22 @@ namespace BlueprintReport
 				rowTC.ThingDef.label
 			});
 			// Second line
-			int difference = Find.CurrentMap.GetCountOnMapDifference(rowTC);
+			int amountPresent;
+			int difference = Find.CurrentMap.GetCountOnMapDifference(rowTC, out amountPresent);
 			if (difference < 0)
 			{
 				tipString += "ReqRowTipLine2Excess".Translate(new object[] {
 					-difference,
-					rowTC.ThingDef.label
+					rowTC.ThingDef.label,
+					amountPresent
 				});
 			}
 			else if (difference > 0)
 			{
 				tipString += "ReqRowTipLine2Lack".Translate(new object[] {
 					difference,
-					rowTC.ThingDef.label
+					rowTC.ThingDef.label,
+					amountPresent
 				});
 			}
 			return tipString;

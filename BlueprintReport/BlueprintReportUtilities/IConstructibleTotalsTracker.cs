@@ -1,10 +1,10 @@
-﻿using System;
+﻿using BlueprintReport.BlueprintReportUtilities;
 using System.Linq;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
 
-namespace BlueprintReport
+namespace BlueprintReport.BlueprintReportUtilities
 {
 	enum TotalsSortModes
 	{

@@ -2,7 +2,7 @@
 using Harmony;
 using System.Reflection;
 
-namespace BlueprintReport
+namespace BlueprintReport.BlueprintReportUtilities
 {
 	[StaticConstructorOnStartup]
 	class BlueprintReportInitializer

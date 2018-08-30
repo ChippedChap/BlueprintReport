@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using BlueprintReport.BlueprintReportUtilities;
+using System.Linq;
 using Verse;
 using RimWorld;
 using UnityEngine;
